@@ -6,7 +6,12 @@ const maxJokeId = writable(0);
 
 let latestId: number;
 
-maxJokeId.subscribe((id) => latestId = id)
+
+export const getLength = () => latestId + 1;
+
+maxJokeId.subscribe((id) => {
+    latestId = id;
+})
 
 export const postJoke = (joke: Content) => {
     joke.id = getNewId();
