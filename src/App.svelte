@@ -10,6 +10,7 @@
     <Route path="/" component={view.TheWelcome} />
     <Route path="/dad-jks" component={view.DadJoke} />
     <Route path="/geek-jks" component={view.GeekJoke} />
+    <Route path="/foaas" component={view.FOAAS} />
   </main>
 </Router>
 

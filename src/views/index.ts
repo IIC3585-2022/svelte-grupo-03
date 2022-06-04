@@ -1,4 +1,4 @@
-export { default as FOAAS } from './DadJokeView.svelte';  // Cambiar a FOAASView
+export { default as FOAAS } from './FOAASView.svelte';
 export { default as DadJoke } from './DadJokeView.svelte';
 export { default as GeekJoke } from './DadJokeView.svelte';  // Cambiar a GeekJokeView
 export { default as Favourites } from './FavouritesView.svelte';
