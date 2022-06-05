@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Content } from '../interfaces/joke';
   import { getRandomDadJoke } from '../services';
 
   import JokeCard from '../components/JokeCard.svelte';
@@ -6,12 +7,12 @@
 
   // export let location: Object;
 
-  let joke = '';
+  let joke = <Content>{};
 
   function loadJoke() {
-    joke = 'Loading...';
+    joke.value = 'Loading...';
     getRandomDadJoke().then((data) => {
-      joke = data.joke;
+      joke = data;
     });
   }
 </script>

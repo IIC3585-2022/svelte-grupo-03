@@ -16,8 +16,8 @@
   {{ sIfPlural }} stored
 </h3>
 <div class="joke-vault">
-  {#each favouriteJokes as { id, type, value } (id)}
-    <li>{type}: <JokeCard joke={value} /></li>
+  {#each favouriteJokes as joke (joke.id)}
+    <li>{joke.type}: <JokeCard {joke} /></li>
   {/each}
 </div>
 
