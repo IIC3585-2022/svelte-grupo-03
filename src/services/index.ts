@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export default async function getRandomGeekJoke() {
+export async function getRandomGeekJoke() {
   try {
     const { data } = await axios.get(
       `https://geek-jokes.sameerkumar.website/api?format=json`
