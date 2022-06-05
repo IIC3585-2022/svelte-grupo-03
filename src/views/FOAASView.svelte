@@ -8,9 +8,10 @@
   import JokeCard from "../components/JokeCard.svelte";
   import AddFavouriteButton from "../components/AddFavouriteButton.svelte";
 
-  let joke: Content;
+  let joke: Content = { value: "" };
 
   const loadFO = (): null => {
+    joke.value = "Loading..."
     getRandomFO().then((responses) => {
       joke = newContent("modificar el texto");
     });

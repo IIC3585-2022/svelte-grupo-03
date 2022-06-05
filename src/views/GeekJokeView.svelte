@@ -10,13 +10,14 @@
 
     // export let location: Object;
 
-    let joke: Content;
+    let joke: Content = { value: "" };
     let error: string;
     let aviso: string;
 
     const loadJoke = (): null => {
         error = "";
         aviso = "";
+        joke.value = "Loading..."
         getRandomGeekJoke()
             .then((data) => {
                 joke = newContent(data?.joke);
