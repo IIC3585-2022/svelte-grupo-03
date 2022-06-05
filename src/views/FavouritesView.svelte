@@ -5,10 +5,12 @@
 
   // const jokesLength = getLength();
   let favouriteJokes: Array<Content>;
-  $: jokesLength = favouriteJokes.length;
-  const sIfPlural = jokesLength === 1 ? "joke" : "jokes";
+  let jokesLength: number;
 
   jokeArray.subscribe((jokes) => (favouriteJokes = jokes));
+
+  jokeArray.subscribe((jokes) => (jokesLength = jokes.length));
+  const sIfPlural = jokesLength === 1 ? "joke" : "jokes";
 </script>
 
 <h1>Favourites</h1>
@@ -18,8 +20,10 @@
 </h3>
 <div class="joke-vault">
   {#each favouriteJokes as joke (joke.id)}
-    <button on:click={() => deleteJoke(joke.id)}> Delete </button>
-    <li>{joke.type}: <JokeCard {joke} /></li>
+    <div class="joke-section">
+      <button on:click={() => deleteJoke(joke.id)}> Delete </button>
+      <li>{joke.type}: <JokeCard {joke} /></li>
+    </div>
   {/each}
 </div>
 
@@ -34,6 +38,13 @@
     margin: auto;
     overflow-y: scroll;
     width: 60ch;
+  }
+
+  .joke-section {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    margin: 1rem 0;
   }
 
   button {
