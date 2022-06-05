@@ -1,13 +1,10 @@
-import { writable } from 'svelte/store';
-import type { Content } from '../interfaces/joke';
+import { writable } from "svelte/store";
+import type { Content } from "../interfaces/joke";
 
 const jokeArray = writable<Array<Content>>([]);
 const maxJokeId = writable(0);
 
 let latestId: number;
-
-
-export const getLength = () => latestId;
 
 maxJokeId.subscribe((id) => {
     latestId = id;

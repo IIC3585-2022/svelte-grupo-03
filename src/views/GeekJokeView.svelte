@@ -10,7 +10,7 @@
 
     // export let location: Object;
 
-    let joke: Content = { value: '' };
+    let joke: Content = { value: "" };
     let error: string;
     let aviso: string;
 

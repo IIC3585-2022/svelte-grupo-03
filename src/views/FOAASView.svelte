@@ -8,7 +8,7 @@
   import JokeCard from "../components/JokeCard.svelte";
   import AddFavouriteButton from "../components/AddFavouriteButton.svelte";
 
-  let joke: Content = { value: '' };
+  let joke: Content = { value: "" };
 
   const loadFO = (): null => {
     joke.value = "Loading..."

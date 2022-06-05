@@ -1,12 +1,12 @@
 <script lang="ts">
-  import jokeArray, { getLength, deleteJoke } from '../stores';
-  import type { Content } from '../interfaces/joke';
-  import JokeCard from '../components/JokeCard.svelte';
+  import jokeArray, { deleteJoke } from "../stores";
+  import type { Content } from "../interfaces/joke";
+  import JokeCard from "../components/JokeCard.svelte";
 
   // const jokesLength = getLength();
   let favouriteJokes: Array<Content>;
   $: jokesLength = favouriteJokes.length;
-  const sIfPlural = jokesLength === 1 ? 'joke' : 'jokes';
+  const sIfPlural = jokesLength === 1 ? "joke" : "jokes";
 
   jokeArray.subscribe((jokes) => (favouriteJokes = jokes));
 </script>
