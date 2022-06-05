@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Router, Route } from 'svelte-routing';
-  import * as view from './views';
-  import NavBar from './components/NavBar.svelte';
+  import { Router, Route } from "svelte-routing";
+  import * as view from "./views";
+  import NavBar from "./components/NavBar.svelte";
 </script>
 
 <Router>

@@ -1,10 +1,11 @@
 <script lang="ts">
-  export let joke: string;
+  import type { Content } from "../interfaces/joke";
+  export let joke: Content;
 </script>
 
 <div class="joke-card">
   <p>
-    <strong>{joke || 'Request a joke!'}</strong>
+    <strong>{joke?.value || "Request a joke!"}</strong>
   </p>
 </div>
 

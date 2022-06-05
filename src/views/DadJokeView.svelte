@@ -1,26 +1,35 @@
 <script lang="ts">
-  import { getRandomDadJoke } from '../services';
+  import { getRandomDadJoke } from "../services";
+  import { postJoke } from "../stores";
 
-  import JokeCard from '../components/JokeCard.svelte';
-  import AddFavouriteButton from '../components/AddFavouriteButton.svelte';
+  import type { Content } from "../interfaces/joke";
+  import { newContent } from "../helpers/joke";
+
+  import JokeCard from "../components/JokeCard.svelte";
+  import AddFavouriteButton from "../components/AddFavouriteButton.svelte";
 
   // export let location: Object;
 
-  let joke = '';
+  let joke: Content;
 
-  function loadJoke() {
-    joke = 'Loading...';
+  const loadJoke = (): null => {
     getRandomDadJoke().then((data) => {
-      joke = data.joke;
+      joke = newContent(data?.joke);
     });
-  }
+    return null;
+  };
+
+  const saveJoke = (): null => {
+    postJoke(joke);
+    return null;
+  };
 </script>
 
 <!-- <main> -->
 <h1>Random Dad Joke</h1>
 <div class="actions">
   <button on:click={loadJoke}>Load Joke</button>
-  <AddFavouriteButton handleClick={() => console.log('desu ne')} />
+  <AddFavouriteButton handleClick={saveJoke} />
 </div>
 <JokeCard {joke} />
 <!-- </main> -->

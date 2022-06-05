@@ -18,6 +18,7 @@ export const postJoke = (joke: Content) => {
     jokeArray.update((jokes) => {
         return [...jokes, joke];
     });
+    console.log(jokeArray);
 };
 
 export const clearJokes = () => {
