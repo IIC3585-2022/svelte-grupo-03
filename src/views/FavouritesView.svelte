@@ -1,10 +1,12 @@
 <script lang="ts">
-  import jokeArray, { getLength } from '../stores';
-  import JokeCard from '../components/JokeCard.svelte';
-  import type { Content } from '../interfaces/joke';
+  import jokeArray, { getLength, deleteJoke } from "../stores";
+
+  import type { Content } from "../interfaces/joke";
+
+  import JokeCard from "../components/JokeCard.svelte";
 
   const jokesLength = getLength();
-  const sIfPlural = jokesLength === 1 ? 'joke' : 'jokes';
+  const sIfPlural = jokesLength === 1 ? "joke" : "jokes";
   let favouriteJokes: Array<Content>;
 
   jokeArray.subscribe((jokes) => (favouriteJokes = jokes));
@@ -16,8 +18,9 @@
   {{ sIfPlural }} stored
 </h3>
 <div class="joke-vault">
-  {#each favouriteJokes as { id, type, value } (id)}
-    <li>{type}: <JokeCard joke={value} /></li>
+  {#each favouriteJokes as joke (joke.id)}
+    <button on:click={() => deleteJoke(joke.id)}> Delete </button>
+    <li>{joke.type}: <JokeCard {joke} /></li>
   {/each}
 </div>
 
@@ -34,5 +37,12 @@
     margin: auto;
     overflow-y: scroll;
     width: 60ch;
+  }
+
+  button {
+    color: white;
+    background-color: red;
+    border: 2px solid;
+    width: fit-content;
   }
 </style>

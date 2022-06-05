@@ -11,6 +11,7 @@
     <Route path="/dad-jks" component={view.DadJoke} />
     <Route path="/geek-jks" component={view.GeekJoke} />
     <Route path="/foaas" component={view.FOAAS} />
+    <Route path="/favourites" component={view.Favourites} />
   </main>
 </Router>
 
