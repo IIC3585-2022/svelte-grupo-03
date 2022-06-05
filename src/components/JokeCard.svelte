@@ -5,7 +5,7 @@
 
 <div class="joke-card">
   <p>
-    <strong>{joke.value || 'Request a joke!'}</strong>
+    <strong>{joke?.value || 'Request a joke!'}</strong>
   </p>
 </div>
 

@@ -7,17 +7,19 @@ const maxJokeId = writable(0);
 let latestId: number;
 
 
-export const getLength = () => latestId + 1;
+export const getLength = () => latestId;
 
 maxJokeId.subscribe((id) => {
     latestId = id;
 })
 
 export const postJoke = (joke: Content) => {
-    joke.id = getNewId();
-    jokeArray.update((jokes) => {
-        return [...jokes, joke];
-    });
+    if (joke.id === undefined || joke.id === null || joke.id === 0) {
+        joke.id = getNewId();
+        jokeArray.update((jokes) => {
+            return [...jokes, joke];
+        });
+    }
 };
 
 export const clearJokes = () => {

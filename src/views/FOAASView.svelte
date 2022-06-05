@@ -1,26 +1,34 @@
 <script setup lang="ts">
   import { getRandomFO } from "../services";
-  import JokeCard from "../components/JokeCard.svelte";
-  import AddFavouriteButton from '../components/AddFavouriteButton.svelte';
+  import { postJoke } from "../stores";
 
-  let joke = '';
-  
-  function loadFO() {
-    joke = 'Loading';
+  import type { Content } from "../interfaces/joke";
+  import { newContent } from "../helpers/joke";
+
+  import JokeCard from "../components/JokeCard.svelte";
+  import AddFavouriteButton from "../components/AddFavouriteButton.svelte";
+
+  let joke: Content = { value: '' };
+
+  const loadFO = (): null => {
+    joke.value = "Loading..."
     getRandomFO().then((responses) => {
-      console.log(responses)
-      joke = responses.foaas.data.message;
+      joke = newContent("modificar el texto");
     });
-  }
-  
-  
-  </script>
-  
-  <!-- <main> -->
-  <h1>Random Dad Joke</h1>
-  <div class="actions">
-    <button on:click={ loadFO }>Load F-Off</button>
-    <AddFavouriteButton handleClick={() => console.log('desu ne')} />
-  </div>
-  <JokeCard {joke} />
-  <!-- </main> -->
+    return null;
+  };
+
+  const saveFO = (): null => {
+    postJoke(joke);
+    return null;
+  };
+</script>
+
+<!-- <main> -->
+<h1>F-Off Generator</h1>
+<div class="actions">
+  <button on:click={loadFO}>Load F-Off</button>
+  <AddFavouriteButton handleClick={saveFO} />
+</div>
+<JokeCard {joke} />
+<!-- </main> -->
