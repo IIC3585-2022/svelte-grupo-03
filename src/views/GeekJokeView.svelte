@@ -11,16 +11,29 @@
     // export let location: Object;
 
     let joke: Content;
+    let error: string;
+    let aviso: string;
 
     const loadJoke = (): null => {
-        getRandomGeekJoke().then((data) => {
-            joke = newContent(data?.joke);
-        });
+        error = "";
+        aviso = "";
+        getRandomGeekJoke()
+            .then((data) => {
+                joke = newContent(data?.joke);
+            })
+            .catch((err) => {
+                error = err.message;
+            });
         return null;
     };
 
     const saveJoke = (): null => {
-        postJoke(joke);
+        if (joke?.value) {
+            postJoke(joke);
+            aviso = "Joke added to favourites";
+        } else {
+            error = "*No joke to add to favourites";
+        }
         return null;
     };
 </script>
@@ -32,4 +45,5 @@
     <AddFavouriteButton handleClick={saveJoke} />
 </div>
 <JokeCard {joke} />
+
 <!-- </main> -->
