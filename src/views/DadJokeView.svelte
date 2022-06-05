@@ -13,23 +13,28 @@
   let joke: Content = { value: "" };
   let error: string;
   let aviso: string;
+  let loading: boolean = false;
 
   const loadJoke = (): null => {
-    joke.value = "Loading...";
     error = "";
     aviso = "";
+    loading = true;
+    joke = { value: "Loading..." };
     getRandomDadJoke()
       .then((data) => {
         joke = newContent(data?.joke, "Dad Joke");
       })
       .catch((err) => {
         error = err.message;
+      })
+      .finally(() => {
+        loading = false;
       });
     return null;
   };
 
   const saveJoke = (): null => {
-    if (joke?.value) {
+    if (joke?.value && !loading) {
       postJoke(joke);
       aviso = "Joke added to favourites";
     } else {
