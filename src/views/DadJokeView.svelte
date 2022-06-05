@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getRandomDadJoke } from "../services";
-  import { postJoke } from '../stores';
+  import { postJoke } from "../stores";
 
   import type { Content } from "../interfaces/joke";
   import { newContent } from "../helpers/joke";
@@ -20,7 +20,7 @@
     aviso = "";
     getRandomDadJoke()
       .then((data) => {
-        joke = newContent(data?.joke);
+        joke = newContent(data?.joke, "Dad Joke");
       })
       .catch((err) => {
         error = err.message;

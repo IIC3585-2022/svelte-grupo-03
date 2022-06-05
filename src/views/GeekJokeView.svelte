@@ -17,10 +17,10 @@
     const loadJoke = (): null => {
         error = "";
         aviso = "";
-        joke.value = "Loading..."
+        joke.value = "Loading...";
         getRandomGeekJoke()
             .then((data) => {
-                joke = newContent(data?.joke);
+                joke = newContent(data?.joke, "Geek Joke");
             })
             .catch((err) => {
                 error = err.message;
