@@ -23,36 +23,29 @@ export async function getRandomDadJoke() {
   }
 }
 
-export async function getRandomFO() {
+export async function getRandomOperation() {
   try {
-    const getOperation = async () => {
-      await axios.get(`https://www.foaas.com/operations`).then(
-        response => {
-          const operation = response.data[Math.floor(Math.random() * response.data.length)];
-          return operation;
-        }
-      );
-    }
+    const { data } = await axios.get(`https://www.foaas.com/operations`);
+    const operation = data[Math.floor(Math.random() * data.length)];
+    return operation;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-    await getOperation().then(
-      response => {
-        const operation = response.data
-      }
-    );
-    while (operation.name !== 'version') {
-      operation = await axios.get(`https://)
-    }
+export async function getPreview(url: string){
+  try {
+    const { data } = await axios.get(`https://www.foaas.com${url}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-    while (operation.name !== 'version') {
-      console.log(operation.name);
-      const { data } = await axios.get(`https://www.foaas.com/operations`);
-      const operation = data[Math.floor(Math.random() * data.length)];
-    }
-    const foaas = await axios.get(`https://www.foaas.com${operation.url}`);
-    [...operation.fields.keys()].forEach((key) => {
-      operation.fields[key].text = ":" + operation.fields[key].field;
-    });
-    return { foaas: foaas, operation: operation };
+export async function getSpecOperation(url: string) {
+  try {
+      const { data } = await axios.get(`https://www.foaas.com${url}`)
+      return data;
   } catch (error) {
     console.error(error);
   }
