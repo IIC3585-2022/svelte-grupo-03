@@ -33,28 +33,19 @@ export async function getRandomOperation() {
   }
 }
 
-export async function getRandomFO() {
+export async function getPreview(url: string){
   try {
-    const getOperation = async () => {
-      await axios.get(`https://www.foaas.com/operations`).then(
-        response => {
-          const operation = response.data[Math.floor(Math.random() * response.data.length)];
-          return operation;
-        }
-      );
-    }
+    const { data } = await axios.get(`https://www.foaas.com${url}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-    const getSpecOperation = async (operation) => {
-      let myUrl = '';
-      operation.fields?.forEach((field) => {
-        myUrl += `/${field.text}`
-      })
-      await axios.get(`https://www.foaas.com${myUrl}`).then(
-        response => {
-          return response.data.message;
-        }
-      );
-    }
+export async function getSpecOperation(url: string) {
+  try {
+      const { data } = await axios.get(`https://www.foaas.com${url}`)
+      return data;
   } catch (error) {
     console.error(error);
   }

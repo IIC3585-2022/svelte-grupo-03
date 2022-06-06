@@ -1,45 +1,76 @@
 <script setup lang="ts">
-  import { getRandomOperation } from "../services";
-  import { getRandomFO } from "../services";
+  import {
+    getRandomOperation,
+    getPreview,
+    getSpecOperation } from "../services";
   import { postJoke } from "../stores";
 
   import type { Content, Operation, Field } from "../interfaces/joke";
   import { newContent, newField, newOperation } from "../helpers/joke";
 
-  import JokeCard from "../components/JokeCard.svelte";
+  import FoaasCard from "../components/FoaasCard.svelte";
   import AddFavouriteButton from "../components/AddFavouriteButton.svelte";
 
   let joke: Content = { value: "" };
-  let operation = { fields: [] }
+  let preview: Content = { value: "" };
+  let operation = { fields: [], url: "" }
   let loading1: boolean = false;
-  let loaded1 = false;
-  let loading2: Content = { value: "" };
+  let loadingPreview = false;
+  let loadedPreview = false;
+  let fields = [];
+  let myUrl = '';
+  let inputs = [];
+  let from = '';
 
   const loadOperation = async () => {
+    joke.value = '';
     loading1 = true;
+    loadingPreview = true;
     await getRandomOperation()
       .then((data) => {
         let myFields = data?.fields.map(field =>{
           return newField(field.name, field.type, field.text)
         })
-        let operation = newOperation(data?.name, data?.url, myFields);
+        operation = newOperation(data?.name, data?.url, myFields);
         console.log(operation);
+        ;
       })
       .catch((err) => {
         console.log(err.message);
       })
-      .finally(() => {
+      .finally( async () => {
         loading1 = false;
-        loaded1 = true;
-      });
-  }
+        await getPreview(operation.url).then(
+          (data) => {
+            console.log('AAAAAA')
+            console.log(data)
+            preview.value = data?.message;
+            console.log(preview.value)
+          }
+        ).catch((err) => {
+          console.log(err.message);
+        }).finally(() => {
+          loadingPreview = false;
+          loadedPreview = true;
+        })
+      })
+  };
 
-  const loadFO = (): null => {
-    joke.value = "Loading..."
-    getRandomFO().then((response) => {
-      joke.value = "";
+  const loadSpecOperation = async () => {
+    joke.value = 'Loading your F-Off';
+    myUrl = '/' + operation.url.split('/')[1];
+    console.log(myUrl);
+    inputs = document.getElementsByClassName('field-input')
+    for (var i = 0; i < inputs.length; i++) {
+      myUrl = myUrl + `/${inputs[i].value}`;
+    }
+    console.log(myUrl);
+    getSpecOperation(myUrl).then((result) => {
+      joke.value = result?.message;
+      from = document.getElementById("From").value;
+    }).catch((err) => {
+      console.log(err.message);
     });
-    return null;
   };
 
   const saveFO = (): null => {
@@ -51,17 +82,39 @@
 <!-- <main> -->
 <h1>F-Off Generator</h1>
 <div class="actions">
-  <button on:click={ loadOperation }>Load F-Off</button>
+  <button on:click={ loadOperation }>Load Random F-off</button>
   <AddFavouriteButton handleClick={ saveFO } />
 </div>
 {#if loading1}
   <p>Loading...</p>
 {/if}
-{#if loaded1}
-  {#each operation.fields as field}
-    <p>{field?.name}</p>
-    {console.log(field.name)}
-  {/each}
+{#each operation.fields as field}
+  <div class="field">
+    <p>{field?.name}:</p><input class="field-input" id={field.name}>
+  </div>
+{/each}
+{#if loadingPreview}
+  <p>Loading Preview...</p>
 {/if}
-<JokeCard { joke } />
+{#if !loadingPreview}
+  <p>{preview.value}</p>
+{/if}
+{#if loadedPreview}
+  <button on:click={ loadSpecOperation }>Load your F-Off</button>
+{/if}
+
+<FoaasCard { joke } { from } />
 <!-- </main> -->
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    align-items: center;
+  }
+
+  .field-input {
+    margin: 0 0 0 10px;
+  }
+</style>
