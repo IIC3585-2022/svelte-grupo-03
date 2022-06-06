@@ -24,6 +24,7 @@
 
   const loadOperation = async () => {
     joke.value = '';
+    from = '';
     loading1 = true;
     loadingPreview = true;
     await getRandomOperation()
@@ -42,7 +43,6 @@
         loading1 = false;
         await getPreview(operation.url).then(
           (data) => {
-            console.log('AAAAAA')
             console.log(data)
             preview.value = data?.message;
             console.log(preview.value)

@@ -9,9 +9,7 @@
     <strong>{joke?.value || "Request a joke!"}</strong>
   </p>
   {#if from !== ""}
-    <div>
-      <p>{from}</p>
-    </div>
+      <p>- {from}</p>
   {/if}
 </div>
 
@@ -23,7 +21,7 @@
     display: flex;
     padding: 1rem;
     border-radius: 4px;
-    flex-direction: row;
+    flex-direction: column;
     background-color: white;
     border: solid 1px lightgray;
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
