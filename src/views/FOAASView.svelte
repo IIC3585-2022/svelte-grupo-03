@@ -17,9 +17,8 @@
   let loading1: boolean = false;
   let loadingPreview = false;
   let loadedPreview = false;
-  let fields = [];
   let myUrl = '';
-  let inputs = [];
+  let inputs: HTMLCollectionOf<Element>;
   let from = '';
 
   const loadOperation = async () => {
